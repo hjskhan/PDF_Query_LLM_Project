@@ -30,7 +30,7 @@ The architecture involves several key steps in the process:
 
 ## Workflow Diagram
 
-![Workflow Diagram](image.png)
+![Workflow Diagram](pdf_query_architecture.png)
 
 
 ## Usage
