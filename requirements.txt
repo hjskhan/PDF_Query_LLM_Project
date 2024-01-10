@@ -1,0 +1,7 @@
+langchain
+openai
+pinecone-client
+python-dotenv
+PyPDF2
+cassio
+tiktoken

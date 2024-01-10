@@ -120,6 +120,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
+llmenv_pdf_query
 .env
 .venv
 env/
