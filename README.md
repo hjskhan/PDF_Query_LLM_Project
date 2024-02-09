@@ -6,6 +6,32 @@ This project facilitates querying information from uploaded PDF files using Lang
 
 The architecture involves several key steps in the process:
 
+## Setup
+
+### Prerequisites
+
+Before running the application, make sure you have the following:
+
+- AstraDB Application Token (`ASTRA_DB_APPLICATION_TOKEN`) for database access.
+- AstraDB ID (`ASTR_DB_ID`) for the specific AstraDB instance.
+- OpenAI API Key (`OPENAI_API_KEY`)
+
+### Installation
+
+1. Install required Python libraries:
+
+    ```bash
+    pip install openai pinecone langchain PyPDF2 tiktoken cassio
+    ```
+
+2. Clone the repository:
+
+    ```bash
+    git clone https://github.com/hjskhan/PDF_Query_LLM_Project.git
+    cd PDF_Query_LLM_Project
+    ```
+## Artichectural Overview
+
 ### 1. Upload PDF
 - Users can upload PDF files via the Streamlit-based user interface.
 
