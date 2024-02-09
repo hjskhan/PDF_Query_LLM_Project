@@ -11,17 +11,11 @@ from dotenv import load_dotenv
 
 
 # Load environment variables from .env file
-load_dotenv()
+load_dotenv(override=True)
 
 ASTRA_DB_APPLICATION_TOKEN = os.getenv('ASTRA_DB_APPLICATION_TOKEN')
 ASTR_DB_ID = os.getenv('ASTR_DB_ID')
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-
-# Debug: Print API keys to check if they are loaded correctly
-print(f"ASTRA_DB_APPLICATION_TOKEN: {ASTRA_DB_APPLICATION_TOKEN}")
-print(f"ASTR_DB_ID: {ASTR_DB_ID}")
-print(f"OPENAI_API_KEY: {OPENAI_API_KEY}")
-
 
 # AstraDB connection and vector store initialization
 def initialize_astra_vector_store():
