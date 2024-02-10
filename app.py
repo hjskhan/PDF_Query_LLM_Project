@@ -10,7 +10,9 @@ from PyPDF2 import PdfReader
 from docx import Document
 import cassio
 from dotenv import load_dotenv
-import exception
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+import requests
 
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
@@ -43,11 +45,35 @@ def initialize_astra_vector_store():
 
 # Function to preprocess the uploaded file
 
-def preprocessor(uploaded_file):
-    if uploaded_file.filename.endswith('.pdf'):
-        return preprocess_pdf(uploaded_file)
-    elif uploaded_file.filename.endswith(('.doc', '.docx')):
-        return preprocess_word(uploaded_file)
+def preprocessor(uploaded_files, url):
+    texts = []
+    for uploaded_file in uploaded_files:
+        if uploaded_file.filename.endswith('.pdf'):
+            texts.extend(preprocess_pdf(uploaded_file))
+        elif uploaded_file.filename.endswith(('.doc', '.docx')):
+            texts.extend(preprocess_word(uploaded_file))
+    if url:
+        texts.extend(preprocess_url(url))
+    return texts
+
+def preprocess_url(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    
+    # kill all script and style elements
+    for script in soup(["script", "style"]):
+        script.decompose()    # rip it out
+
+    raw_text = soup.get_text()
+
+    text_splitter = CharacterTextSplitter(
+        separator='\n',
+        chunk_size=800,
+        chunk_overlap=200,
+        length_function=len
+    )
+    texts = text_splitter.split_text(raw_text)
+    return texts
 
 def preprocess_pdf(uploaded_file):
     pdf_reader = PdfReader(uploaded_file)
@@ -95,9 +121,10 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload():
     if request.method == 'POST':
-        uploaded_file = request.files['file']
-        if uploaded_file:
-            session['texts'] = preprocessor(uploaded_file)
+        uploaded_files = request.files.getlist('file')
+        url = request.form['url']
+        if uploaded_files and url:
+            session['texts'] = preprocessor(uploaded_files,url)
     return render_template('query.html')
 
 @app.route('/query', methods=['POST'])

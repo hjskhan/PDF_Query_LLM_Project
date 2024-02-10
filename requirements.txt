@@ -10,3 +10,4 @@ flask
 flask_session
 python-docx
 exception
+beautifulsoup4
