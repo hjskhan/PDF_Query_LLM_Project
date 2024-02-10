@@ -6,3 +6,7 @@ PyPDF2
 cassio
 tiktoken
 astrapy
+flask
+flask_session
+python-docx
+exception

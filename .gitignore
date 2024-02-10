@@ -121,6 +121,7 @@ celerybeat.pid
 
 # Environments
 llmenv_pdf_query
+st_app.py
 .env
 .venv
 env/

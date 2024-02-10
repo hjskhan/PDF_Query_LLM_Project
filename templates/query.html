@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query Results</title>
+</head>
+<body>
+    <h1>Query Results</h1>
+    <form action="/query" method="post">
+        <!-- <input type="hidden" name="texts" value="{{ texts }}"> -->
+        <label for="query_text">Enter Query:</label>
+        <input type="text" name="query_text" required>
+        <button type="submit">Submit Query</button>
+    </form>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+    {% if query_text %}
+        <p><strong>Query:</strong> {{ query_text }}</p>
+    {% endif %}
+    {% if answer %}
+        <p><strong>Answer:</strong> {{ answer }}</p>
+    {% endif %}
+</body>
+</html>
